@@ -7,14 +7,15 @@ describe('mentio-menu', function () {
         $provide.value('$log', console);
     }));
 
-    beforeEach(inject(function (_$compile_, $rootScope, $templateCache, _$document_, _$window_, mentioUtil, _$timeout_) {
+    beforeEach(inject(function (_$compile_, $rootScope, $templateCache, _$document_, _$window_, mentioUtil,
+            _$timeout_) {
         $document = _$document_;
         $compile = _$compile_;
         $window = _$window_;
         $timeout = _$timeout_;
         mentioUtilService = mentioUtil;
 
-        $templateCache.put('/people-mentions.tpl', 
+        $templateCache.put('/people-mentions.tpl',
                 '<div>' +
                 '<li mentio-menu-item="person" ng-repeat="person in items">' +
                 '   <img ng-src="{{person._source.imageUrl}}"><p class="name">{{person._source.name}}</p>' +
@@ -35,7 +36,7 @@ describe('mentio-menu', function () {
     function compareItems(items, mentioMenuScope) {
         var childCount = 0;
         for(var cs = mentioMenuScope.$$childHead; cs; cs = cs.$$nextSibling) {
-            expect(cs.item).toEqual(items[childCount])
+            expect(cs.item).toEqual(items[childCount]);
             childCount++;
         }
 
@@ -54,7 +55,7 @@ describe('mentio-menu', function () {
 
     function createMentioMenu(scope) {
         scope.mockItemsSource = [
-            {label: 'test1'}, 
+            {label: 'test1'},
             {label: 'test2'}
         ];
 
@@ -92,10 +93,10 @@ describe('mentio-menu', function () {
         $document[0].body.appendChild(textarea[0]);
 
         $scope.mockItems = [
-            {label: 'test1'}, 
+            {label: 'test1'},
             {label: 'test2'},
             {label: 'test3'}
-         ];
+        ];
 
         $scope.$apply();
 
@@ -169,13 +170,13 @@ describe('mentio-menu', function () {
         expect(coordinates.top).toBeGreaterThan(0);
         expect(coordinates.left).toBeGreaterThan(0);
 
-        var textarea = angular.element('<input type="text" ng-trim="false"></input>');
+        textarea = angular.element('<input type="text" ng-trim="false"></input>');
         $compile(textarea)($scope);
         $document[0].body.appendChild(textarea[0]);
 
         $scope.$apply();
 
-        var coordinates = mentioUtilService.getTextAreaOrInputUnderlinePosition(textarea[0], 2);
+        coordinates = mentioUtilService.getTextAreaOrInputUnderlinePosition(textarea[0], 2);
 
         expect(coordinates.top).toBeGreaterThan(0);
         expect(coordinates.left).toBeGreaterThan(0);
@@ -196,14 +197,14 @@ describe('mentio-menu', function () {
 
         textarea[0].selectionStart = 1;
         textarea[0].selectionEnd = 1;
- 
+
         text = mentioUtilService.getTextPrecedingCurrentSelection();
 
         expect(text).toEqual('1');
 
         textarea[0].selectionStart = 2;
         textarea[0].selectionEnd = 2;
- 
+
         text = mentioUtilService.getTextPrecedingCurrentSelection();
 
         expect(text).toEqual('12');
@@ -236,19 +237,19 @@ describe('mentio-menu', function () {
 
         mentioUtilService.selectElement(elem[0], [0], 1);
 
-        var selectionInfo = mentioUtilService.getContentEditableSelectedPath();
+        selectionInfo = mentioUtilService.getContentEditableSelectedPath();
 
         expect(selectionInfo.selected).toEqual(elem[0]);
         expect(selectionInfo.path).toEqual([0]);
         expect(selectionInfo.offset).toEqual(1);
 
-        var elem = angular.element('<div contenteditable><span>1<span>2</span>3</span></div>');
+        elem = angular.element('<div contenteditable><span>1<span>2</span>3</span></div>');
         $compile(elem)($scope);
         $document[0].body.appendChild(elem[0]);
 
         mentioUtilService.selectElement(elem[0], [0,0], 1);
 
-        var selectionInfo = mentioUtilService.getContentEditableSelectedPath();
+        selectionInfo = mentioUtilService.getContentEditableSelectedPath();
 
         expect(selectionInfo.selected).toEqual(elem[0]);
         expect(selectionInfo.path).toEqual([0,0]);
@@ -256,7 +257,7 @@ describe('mentio-menu', function () {
 
         mentioUtilService.selectElement(elem[0], [0,2], 1);
 
-        var selectionInfo = mentioUtilService.getContentEditableSelectedPath();
+        selectionInfo = mentioUtilService.getContentEditableSelectedPath();
 
         expect(selectionInfo.selected).toEqual(elem[0]);
         expect(selectionInfo.path).toEqual([0,2]);
@@ -305,10 +306,10 @@ describe('mentio-menu', function () {
         $document[0].body.appendChild(elem[0]);
 
         $scope.mockItems = [
-            {label: 'test1'}, 
+            {label: 'test1'},
             {label: 'test2'},
             {label: 'test3'}
-         ];
+        ];
 
         $scope.$apply();
 
@@ -333,16 +334,16 @@ describe('mentio-menu', function () {
         mentioScope.$destroy();
         $document[0].body.removeChild(elem[0]);
 
-        var elem = angular.element('<textarea mentio mentio-items="mockItems" ng-trim="false">@test</textarea>');
+        elem = angular.element('<textarea mentio mentio-items="mockItems" ng-trim="false">@test</textarea>');
         $compile(elem)($scope);
         $document[0].body.appendChild(elem[0]);
 
         $scope.$apply();
 
         // This is ugly, uses undocumented method to access the child scopes
-        for(var cs = $scope.$$childHead; cs; cs = cs.$$nextSibling) {
-            if(cs.triggerCharMap) {
-                mentioScope = cs;
+        for(var cs2 = $scope.$$childHead; cs2; cs2 = cs2.$$nextSibling) {
+            if(cs2.triggerCharMap) {
+                mentioScope = cs2;
             }
         }
 
@@ -354,7 +355,7 @@ describe('mentio-menu', function () {
         mentioScope.$apply();
 
 
-        var menuScope = mentioScope.triggerCharMap['@'];
+        menuScope = mentioScope.triggerCharMap['@'];
         expect(menuScope.menuElement[0].getBoundingClientRect().top > 0);
         expect(menuScope.menuElement.css('display') === 'block');
     });
@@ -365,10 +366,10 @@ describe('mentio-menu', function () {
         $document[0].body.appendChild(elem[0]);
 
         $scope.mockItems = [
-            {label: 'test1'}, 
+            {label: 'test1'},
             {label: 'test2'},
             {label: 'test3'}
-         ];
+        ];
 
         $scope.$apply();
 
@@ -391,15 +392,16 @@ describe('mentio-menu', function () {
     });
 
     it('trigger text should be replaced', function () {
-        var elem = angular.element('<div mentio contenteditable mentio-items="mockItems" ng-trim="false">123 @test abc</div>');
+        var elem = angular.element('<div mentio contenteditable mentio-items="mockItems" ng-trim="false">' +
+            '123 @test abc</div>');
         $compile(elem)($scope);
         $document[0].body.appendChild(elem[0]);
 
         $scope.mockItems = [
-            {label: 'test1'}, 
+            {label: 'test1'},
             {label: 'test2'},
             {label: 'test3'}
-         ];
+        ];
 
         $scope.$apply();
 
@@ -420,20 +422,21 @@ describe('mentio-menu', function () {
     });
 
     it('macro text should be replaced', function () {
-        var elem = angular.element('<div mentio contenteditable mentio-items="mockItems" ng-trim="false">123 brb abc</div>');
+        var elem = angular.element('<div mentio contenteditable mentio-items="mockItems" ng-trim="false">' +
+            '123 brb abc</div>');
         $compile(elem)($scope);
         $document[0].body.appendChild(elem[0]);
 
         $scope.mockItems = [
-            {label: 'test1'}, 
+            {label: 'test1'},
             {label: 'test2'},
             {label: 'test3'}
-         ];
+        ];
 
         var macros = {
-            brb: 'Be right back', 
+            brb: 'Be right back',
             omw: 'On my way'
-         };
+        };
 
         $scope.$apply();
 
@@ -451,34 +454,37 @@ describe('mentio-menu', function () {
 
         mentioUtilService.replaceMacroText(elem[0], [0], 7, macros, 'On my way');
         expect(elem.val()).toEqual('123 On my way abc');
-    });    
+    });
 
     it('should be visible after scroll', function () {
-        var first = angular.element('<div mentio contenteditable mentio-items="mockItems" ng-trim="false">123 brb abc</div>');
+        var first = angular.element('<div mentio contenteditable mentio-items="mockItems" ng-trim="false">' +
+            '123 brb abc</div>');
         $compile(first)($scope);
         $document[0].body.appendChild(first[0]);
 
         for (var i = 0; i < 50; i++) {
-            var elem = angular.element('<div mentio contenteditable mentio-items="mockItems" ng-trim="false">123 brb abc</div>');
+            var elem = angular.element('<div mentio contenteditable mentio-items="mockItems" ng-trim="false">' +
+                '123 brb abc</div>');
             $compile(elem)($scope);
             $document[0].body.appendChild(elem[0]);
         }
 
-        var last = angular.element('<div mentio contenteditable mentio-items="mockItems" ng-trim="false">123 brb abc</div>');
+        var last = angular.element('<div mentio contenteditable mentio-items="mockItems" ng-trim="false">' +
+            '123 brb abc</div>');
         $compile(last)($scope);
         $document[0].body.appendChild(last[0]);
 
-        expect(last[0].getBoundingClientRect().top + last[0].getBoundingClientRect().height > $window.innerHeight)
+        expect(last[0].getBoundingClientRect().top + last[0].getBoundingClientRect().height > $window.innerHeight);
 
         mentioUtilService.scrollIntoView(last);
 
-        expect(last[0].getBoundingClientRect().top + last[0].getBoundingClientRect().height === $window.innerHeight)
+        expect(last[0].getBoundingClientRect().top + last[0].getBoundingClientRect().height === $window.innerHeight);
 
-        expect(first[0].getBoundingClientRect().top < 0)
+        expect(first[0].getBoundingClientRect().top < 0);
 
         mentioUtilService.scrollIntoView(first);
 
-        expect(first[0].getBoundingClientRect().top === 0)
+        expect(first[0].getBoundingClientRect().top === 0);
     });
 
     it('should replace text', function () {
@@ -488,15 +494,15 @@ describe('mentio-menu', function () {
         $document[0].body.appendChild(elem[0]);
 
         $scope.mockItems = [
-            {label: 'test1'}, 
+            {label: 'test1'},
             {label: 'test2'},
             {label: 'test3'}
-         ];
+        ];
 
         $scope.macros = {
-            brb: 'Be right back', 
+            brb: 'Be right back',
             omw: 'On my way'
-         };
+        };
 
         $scope.$apply();
 
@@ -509,7 +515,7 @@ describe('mentio-menu', function () {
             }
         }
 
-        $scope.test = "@test";
+        $scope.test = '@test';
         mentioScope.query('@', 'test');
         mentioScope.$apply();
 
@@ -521,13 +527,13 @@ describe('mentio-menu', function () {
 
         expect(elem.html()).toEqual('@test2&nbsp;');
 
-        $scope.test = "@test";
+        $scope.test = '@test';
         elem.html('@test');
         mentioUtilService.selectElement(elem[0], [0], 5);
         mentioScope.query('@', 'test');
         mentioScope.$apply();
 
-        var menuScope = mentioScope.triggerCharMap['@'];
+        menuScope = mentioScope.triggerCharMap['@'];
 
         menuScope.selectActive();
 
@@ -537,14 +543,13 @@ describe('mentio-menu', function () {
 
         elem.html('brb');
         mentioUtilService.selectElement(elem[0], [0], 3);
-        $scope.test = "brb2";
+        $scope.test = 'brb2';
         mentioScope.$apply();
-        $scope.test = "brb";
+        $scope.test = 'brb';
         mentioScope.$apply();
 
         $timeout.flush(300);
         expect(elem.html()).toEqual('Be right back');
-
     });
 
 
